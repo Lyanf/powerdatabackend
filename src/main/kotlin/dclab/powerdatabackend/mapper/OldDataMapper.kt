@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository
 
 @Mapper
 @Repository
-interface DataMapper {
+interface OldDataMapper {
     @Select("select * from data where " +
             "measurePoint like #{measurePoint}  and " +
             "location like #{location}  and " +

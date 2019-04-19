@@ -1,7 +1,7 @@
 package dclab.powerdatabackend.service
 
 import dclab.powerdatabackend.domain.User
-import dclab.powerdatabackend.mapper.UserMapper
+import dclab.powerdatabackend.mapper.OldUserMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.HashMap
@@ -11,14 +11,14 @@ import java.util.HashMap
 @Service
 class LoginService {
     @Autowired
-    private var userMapper: UserMapper? = null
+    private var oldUserMapper: OldUserMapper? = null
 
-    fun setUserMapper(userMapper: UserMapper) {
-        this.userMapper = userMapper
+    fun setUserMapper(oldUserMapper: OldUserMapper) {
+        this.oldUserMapper = oldUserMapper
     }
 
     fun login(username: String?, password: String?): Any {
-        val user = userMapper?.getUserByUsername(username!!)
+        val user = oldUserMapper?.getUserByUsername(username!!)
         if (user != null) {
             if (user.password.equals(password)) {
                 val result = HashMap<String, Any>()
@@ -41,7 +41,7 @@ class LoginService {
     }
 
     fun register(user: User): Any? {
-        return if (userMapper!!.insertUser(user) == 1)
+        return if (oldUserMapper!!.insertUser(user) == 1)
             user
         else
             null

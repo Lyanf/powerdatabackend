@@ -2,7 +2,7 @@ package dclab.powerdatabackend.service
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import dclab.powerdatabackend.domain.FileInfo
-import dclab.powerdatabackend.mapper.FileMapper
+import dclab.powerdatabackend.mapper.OldFileMapper
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.apache.tomcat.util.http.fileupload.IOUtils
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,19 +22,19 @@ import javax.servlet.http.HttpServletResponse
 class FileService {
 
     @Autowired
-    private var fileMapper: FileMapper? = null
+    private var oldFileMapper: OldFileMapper? = null
 
     val fileList: Any
         get() {
-            val fileI = fileMapper!!.fileList
+            val fileI = oldFileMapper!!.fileList
             val result = HashMap<String, Any>()
             result["files"] = fileI
             result["status"] = "SUCCESS"
             return result
         }
 
-    fun setFileMapper(fileMapper: FileMapper) {
-        this.fileMapper = fileMapper
+    fun setFileMapper(oldFileMapper: OldFileMapper) {
+        this.oldFileMapper = oldFileMapper
     }
 
 
@@ -68,8 +68,8 @@ class FileService {
         val fi = FileInfo()
         fi.fileName = (file.originalFilename)
         fi.location = (upload.absolutePath + File.separator + file.originalFilename)
-        fileMapper!!.InsertFile(fi)
-        val fileI = fileMapper!!.fileList
+        oldFileMapper!!.InsertFile(fi)
+        val fileI = oldFileMapper!!.fileList
         val result = HashMap<String, Any>()
         result["files"] = fileI
         result["status"] = "SUCCESS"
@@ -78,7 +78,7 @@ class FileService {
 
     @Throws(IOException::class)
     fun downloadFile(fileID: Int, response: HttpServletResponse) {
-        val f = fileMapper!!.getFileByID(fileID)
+        val f = oldFileMapper!!.getFileByID(fileID)
         val file = File(f.location)
         val filename = f.fileName
         response.setHeader("content-type", "application/octet-stream")
@@ -94,13 +94,13 @@ class FileService {
     }
 
     //    public Object getTableTitle(int fileID){
-    //        FileInfo f = fileMapper.getFileByID(fileID);
+    //        FileInfo f = oldFileMapper.getFileByID(fileID);
     //        File file = new File(f.getLocation());
     //
     //    }
     @Throws(IOException::class, InvalidFormatException::class)
     fun getBookTitle(fileID: Int): Any {
-        val fileInfo = fileMapper!!.getFileByID(fileID)
+        val fileInfo = oldFileMapper!!.getFileByID(fileID)
         val location = fileInfo.location
         val file = File(location)
         val stream = FileInputStream(file)
@@ -119,7 +119,7 @@ class FileService {
 
     @Throws(IOException::class)
     fun getSheet(fileID: Int, sheetName: String): Any? {
-        val fileInfo = fileMapper!!.getFileByID(fileID)
+        val fileInfo = oldFileMapper!!.getFileByID(fileID)
         val location = fileInfo.location
         val file = File(location)
         val stream = FileInputStream(file)

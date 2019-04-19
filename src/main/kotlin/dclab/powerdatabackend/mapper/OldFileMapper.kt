@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 
 @Mapper
 @Repository
-interface FileMapper {
+interface OldFileMapper {
 
     @get:
     Select("SELECT * FROM `file`")

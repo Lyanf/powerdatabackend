@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 
 @Mapper
 @Repository
-interface UserMapper {
+interface OldUserMapper {
     @Select("SELECT * FROM `user` WHERE username=#{username}")
     fun getUserByUsername(username: String): User
 
