@@ -174,7 +174,7 @@ class NewMetaDataController {
     fun startKafka():String
     {
         val properties = Properties()
-        properties.put("bootstrap.servers", "192.168.1.194:9092")
+        properties.put("bootstrap.servers", "202.120.40.111:9092")
         properties.put("group.id", "group-1")
         properties.put("enable.auto.commit", "true")
         properties.put("auto.commit.interval.ms", "1000")
@@ -198,8 +198,14 @@ class NewMetaDataController {
                 tempData.location = location
                 tempData.value = value.toFloat()
                 tempData.measurepoint = cedian
-                print(tempData)
-                dataMapper.insert(tempData)
+                print("整个对象是：${tempData}")
+                print("对象的值有:${tempData.date},${tempData.location},${tempData.value},${tempData.measurepoint}")
+                try{
+                    dataMapper.insert(tempData)
+                }
+                catch (e:Exception){
+                    print(e.message)
+                }
             }
         }
 
