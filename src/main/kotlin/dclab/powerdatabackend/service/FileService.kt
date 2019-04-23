@@ -1,6 +1,7 @@
 package dclab.powerdatabackend.service
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import dclab.powerdatabackend.dao.FileMapper
 import dclab.powerdatabackend.domain.FileInfo
 import dclab.powerdatabackend.mapper.OldFileMapper
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
@@ -14,15 +15,24 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.net.URLEncoder
+import java.time.LocalDateTime
 import java.util.*
 import javax.servlet.http.HttpServletResponse
 
-
+fun humanReadableByteCount(bytes: Long, si: Boolean): String {
+    val unit = if (si) 1000 else 1024
+    if (bytes < unit) return "$bytes B"
+    val exp = (Math.log(bytes.toDouble()) / Math.log(unit.toDouble())).toInt()
+    val pre = (if (si) "kMGTPE" else "KMGTPE")[exp - 1] + if (si) "" else "i"
+    return String.format("%.1f %sB", bytes / Math.pow(unit.toDouble(), exp.toDouble()), pre)
+}
 @Service
 class FileService {
 
     @Autowired
     private var oldFileMapper: OldFileMapper? = null
+    @Autowired
+    lateinit var newFileMapper: FileMapper
 
     val fileList: Any
         get() {
@@ -68,8 +78,18 @@ class FileService {
         val fi = FileInfo()
         fi.fileName = (file.originalFilename)
         fi.location = (upload.absolutePath + File.separator + file.originalFilename)
-        oldFileMapper!!.InsertFile(fi)
-        val fileI = oldFileMapper!!.fileList
+//        在原有代码上修修补补，但是不破坏原来的逻辑
+        var newFile = dclab.powerdatabackend.model.File()
+        newFile.filename = fi.fileName
+        newFile.location = fi.location
+        newFile.createtime = LocalDateTime.now().toString()
+        newFile.creator = "alvis"
+        newFile.type = "源数据"
+        newFile.size = humanReadableByteCount(file.size,true)
+//        oldFileMapper!!.InsertFile(fi)
+//        val fileI = oldFileMapper!!.fileList
+        newFileMapper.insert(newFile)
+        val fileI = newFileMapper.selectAll()
         val result = HashMap<String, Any>()
         result["files"] = fileI
         result["status"] = "SUCCESS"
@@ -93,11 +113,7 @@ class FileService {
 
     }
 
-    //    public Object getTableTitle(int fileID){
-    //        FileInfo f = oldFileMapper.getFileByID(fileID);
-    //        File file = new File(f.getLocation());
-    //
-    //    }
+
     @Throws(IOException::class, InvalidFormatException::class)
     fun getBookTitle(fileID: Int): Any {
         val fileInfo = oldFileMapper!!.getFileByID(fileID)
