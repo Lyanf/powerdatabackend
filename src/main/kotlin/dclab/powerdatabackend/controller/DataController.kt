@@ -1,19 +1,16 @@
 package dclab.powerdatabackend.controller
 
 import com.alibaba.fastjson.JSON
-import com.alibaba.fastjson.JSONObject
-import dclab.powerdatabackend.service.DataService
+import dclab.powerdatabackend.service.OldDataService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
-import java.util.*
-import kotlin.collections.ArrayList
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
 class DataController{
     @Autowired
-    private val dataService:DataService? = null
+    private val dataService:OldDataService? = null
 
     @RequestMapping("/searchData",method = arrayOf(RequestMethod.POST))
     fun searchData(@RequestBody data:String):Any?{
