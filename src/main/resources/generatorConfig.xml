@@ -35,8 +35,10 @@
                <!--enableSelectByExample="false" enableUpdateByExample="false"/>-->
         <!--<table schema="powersystem" tableName="concepttype" enableCountByExample="false" enableDeleteByExample="false"-->
                <!--enableSelectByExample="false" enableUpdateByExample="false"/>-->
-        <table schema="powersystem" tableName="file" enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>
+<!--        <table schema="powersystem" tableName="file" enableCountByExample="false" enableDeleteByExample="false"-->
+<!--               enableSelectByExample="false" enableUpdateByExample="false"/>-->
+        <table schema="powersystem" tableName="algorithmresult" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>
         <!--<table schema="powersystem" tableName="data" enableCountByExample="false" enableDeleteByExample="false"-->
                <!--enableSelectByExample="false" enableUpdateByExample="false"/>-->
         <!--<table schema="powersystem" tableName="logic" enableCountByExample="false" enableDeleteByExample="false"-->
