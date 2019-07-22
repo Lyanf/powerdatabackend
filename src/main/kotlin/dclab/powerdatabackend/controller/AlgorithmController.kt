@@ -52,13 +52,16 @@ class AlgorhtimController{
             jsonObject.put("line",line)
             jsonObject.put("device",device)
             val requestBody = com.squareup.okhttp.RequestBody.create(jsonType,jsonObject.toJSONString())
-            val request = Request.Builder().url("http://127.0.0.1:5000/algorithm/predict").addHeader("Content-Type","application/json;charset=utf-8").post(requestBody).build()
+            val algorithmURL = System.getProperty("ALGORITHM_URL")
+            val apiURL = "${algorithmURL}/algorithm/predict"
+            val request = Request.Builder().url(apiURL).addHeader("Content-Type","application/json;charset=utf-8").post(requestBody).build()
             client.newCall(request).execute()
             return ""
         }
         else{
-            val filename = "C:\\Users\\60913\\PycharmProjects\\eleforecast\\${result.result}.json"
-            val file = File(filename)
+            val sharedRoot = System.getProperty("SHARED_ROOT")
+            val realFileName = "${result.result}.json"
+            val file = File(sharedRoot,realFileName)
             val contents = file.readText()
             println(contents)
             return contents
