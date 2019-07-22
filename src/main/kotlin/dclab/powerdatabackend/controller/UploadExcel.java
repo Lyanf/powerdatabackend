@@ -1,7 +1,6 @@
 package dclab.powerdatabackend.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import dclab.powerdatabackend.model.Data;
 import dclab.powerdatabackend.model.Datas;
 import dclab.powerdatabackend.service.DataService;
 import org.apache.poi.ss.usermodel.Row;
