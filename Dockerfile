@@ -14,5 +14,8 @@ VOLUME /tmp
 
 COPY --from=build /workspace/app/target/powerdatabackend-0.0.1-SNAPSHOT.jar app.jar
 
+ENV SHARED_ROOT /data
+ENV ALGORITHM_URL http://192.168.1.115:5000
+
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","app.jar"]
