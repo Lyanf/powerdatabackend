@@ -29,7 +29,8 @@ class AlgorhtimController{
         val factory = data["factory"]
         val line = data["line"]
         val device = data["device"]
-        val allString = factory+line+device
+        val measurePoint = data["measurePoint"]
+        val allString = factory+line+device+measurePoint
         val md = MessageDigest.getInstance("MD5")
         md.update(allString.toByteArray())
         val stringHash =(DatatypeConverter.printHexBinary(md.digest())).toLowerCase()
@@ -51,6 +52,7 @@ class AlgorhtimController{
             jsonObject.put("factory",factory)
             jsonObject.put("line",line)
             jsonObject.put("device",device)
+            jsonObject.put("measurePoint",measurePoint)
             val requestBody = com.squareup.okhttp.RequestBody.create(jsonType,jsonObject.toJSONString())
             val algorithmURL = System.getenv("ALGORITHM_URL")
             val apiURL = "${algorithmURL}/algorithm/predict"

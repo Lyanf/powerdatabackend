@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
 
-    <classPathEntry location="C:\Users\60913\.m2\repository\mysql\mysql-connector-java\8.0.15\mysql-connector-java-8.0.15.jar"/>
+    <classPathEntry location="C:\Users\lyf\.m2\repository\mysql\mysql-connector-java\8.0.15\mysql-connector-java-8.0.15.jar"/>
 
     <context id="context" targetRuntime="MyBatis3Simple">
         <commentGenerator>
@@ -30,6 +30,8 @@
         <javaClientGenerator targetPackage="dclab.powerdatabackend.dao" type="ANNOTATEDMAPPER" targetProject=".">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
+        <table schema="powersystem" tableName="correlation" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
 
         <!--<table schema="powersystem" tableName="concept" enableCountByExample="false" enableDeleteByExample="false"-->
                <!--enableSelectByExample="false" enableUpdateByExample="false"/>-->
@@ -37,8 +39,9 @@
                <!--enableSelectByExample="false" enableUpdateByExample="false"/>-->
 <!--        <table schema="powersystem" tableName="file" enableCountByExample="false" enableDeleteByExample="false"-->
 <!--               enableSelectByExample="false" enableUpdateByExample="false"/>-->
-        <table schema="powersystem" tableName="algorithmresult" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>
+<!--        <table schema="powersystem" tableName="algorithmresult" enableCountByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>-->
+
         <!--<table schema="powersystem" tableName="data" enableCountByExample="false" enableDeleteByExample="false"-->
                <!--enableSelectByExample="false" enableUpdateByExample="false"/>-->
         <!--<table schema="powersystem" tableName="logic" enableCountByExample="false" enableDeleteByExample="false"-->

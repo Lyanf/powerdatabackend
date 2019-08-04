@@ -85,9 +85,7 @@ public class DataImport {
             }
 //            System.out.println(datalist.get(0));
             ExcelOp.insertAll("datas",datalist,dataSource.getConnection());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
         String str = "{status : 'Success',msg : '导入成功'}";
