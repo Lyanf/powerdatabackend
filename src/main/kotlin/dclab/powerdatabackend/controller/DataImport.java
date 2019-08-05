@@ -30,7 +30,7 @@ public class DataImport {
 
     @RequestMapping("/uploaddata")
     @ResponseBody
-    public String importExcel(@RequestParam(value="filename") MultipartFile file) {
+    public String importExcel(MultipartFile file) {
 
         if (file.isEmpty()) {
             String str = "{status : 'Failed',msg : '文件为空'}";
