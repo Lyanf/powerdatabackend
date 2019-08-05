@@ -79,10 +79,8 @@ public class ExcelOp {
         try
         {
 
-            Connection conn = con;
-
             String query = "SELECT DISTINCT factory,device,line FROM datas";
-            Statement st = conn.createStatement();
+            Statement st = con.createStatement();
 
             ResultSet rs = st.executeQuery(query);
             while (rs.next())
@@ -96,6 +94,7 @@ public class ExcelOp {
 
             }
             st.close();
+            con.close();
         }
         catch (Exception e)
         {
