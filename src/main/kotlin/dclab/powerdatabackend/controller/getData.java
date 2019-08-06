@@ -59,12 +59,12 @@ public class getData {
                 result.add(m);
             }
         }
-        System.out.print(JSON.toJSONString(result));
+//        System.out.print(JSON.toJSONString(result));
 //        String str = "{status : 'Success',msg : 'h'}";
         //转换字符串为JSONObject
 //        JSONObject result = JSONObject.parseObject(str);
-
-        return JSON.toJSONString(result);
+        String tempJS = JSON.toJSONString(result);
+        return tempJS;
     }
     @RequestMapping(value = "/getMetaDataTree", method = RequestMethod.POST)
     @ResponseBody
