@@ -14,7 +14,7 @@ public class Datas {
     /**
      * 主键
      */
-    @TableId(value = "id",type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     public Long getId() {
@@ -49,10 +49,10 @@ public class Datas {
         this.timestamp = timestamp;
     }
 
-    @TableField(value="factory")
-    private  String factory;
-    @TableField(value="line")
-    private  String line;
+    @TableField(value = "factory")
+    private String factory;
+    @TableField(value = "line")
+    private String line;
 
     public String getDevice() {
         return device;
@@ -64,84 +64,84 @@ public class Datas {
 
     @TableField(value = "device")
     private String device;
-    @TableField(value="timestamp")
-    private  String timestamp;
-    @TableField(value="APhaseElectricTension")
-    private  Double APhaseElectricTension;
-    @TableField(value="BPhaseElectricTension")
-    private  Double        BPhaseElectricTension;
+    @TableField(value = "timestamp")
+    private String timestamp;
+    @TableField(value = "APhaseElectricTension")
+    private Double APhaseElectricTension;
+    @TableField(value = "BPhaseElectricTension")
+    private Double BPhaseElectricTension;
     @TableField(value = "CPhaseElectricTension")
-    private  Double CPhaseElectricTension;
-    @TableField(value="ABLineElectricTension")
-    private  Double        ABLineElectricTension;
+    private Double CPhaseElectricTension;
+    @TableField(value = "ABLineElectricTension")
+    private Double ABLineElectricTension;
     @TableField(value = "BCLineElectricTension")
-    private  Double BCLineElectricTension;
+    private Double BCLineElectricTension;
     @TableField(value = "CALineElectricTension")
-    private  Double        CALineElectricTension;
+    private Double CALineElectricTension;
     @TableField(value = "APhaseElectricCurrent")
-    private   Double APhaseElectricCurrent;
+    private Double APhaseElectricCurrent;
     @TableField(value = "BPhaseElectricCurrent")
-    private   Double        BPhaseElectricCurrent;
+    private Double BPhaseElectricCurrent;
     @TableField(value = "CPhaseElectricCurrent")
-    private  Double CPhaseElectricCurrent;
+    private Double CPhaseElectricCurrent;
     @TableField(value = "ZeroSequenceCurrent")
-    private  Double        ZeroSequenceCurrent;
+    private Double ZeroSequenceCurrent;
     @TableField(value = "APhaseActivePower")
-    private  Double APhaseActivePower;
+    private Double APhaseActivePower;
     @TableField(value = "BPhaseActivePower")
-    private  Double        BPhaseActivePower;
+    private Double BPhaseActivePower;
     @TableField(value = "CPhaseActivePower")
-    private  Double CPhaseActivePower;
+    private Double CPhaseActivePower;
     @TableField(value = "ThreePhaseTotalActivePower")
-    private  Double        ThreePhaseTotalActivePower;
+    private Double ThreePhaseTotalActivePower;
     @TableField(value = "APhaseReactivePower")
-    private   Double APhaseReactivePower;
+    private Double APhaseReactivePower;
     @TableField(value = "BPhaseReactivePower")
-    private   Double        BPhaseReactivePower;
+    private Double BPhaseReactivePower;
     @TableField(value = "CPhaseReactivePower")
-    private   Double CPhaseReactivePower;
+    private Double CPhaseReactivePower;
     @TableField(value = "ThreePhaseTotalReactivePower")
-    private   Double        ThreePhaseTotalReactivePower;
+    private Double ThreePhaseTotalReactivePower;
     @TableField(value = "APhaseAtPower")
-    private   Double APhaseAtPower;
+    private Double APhaseAtPower;
     @TableField(value = "BPhaseAtPower")
-    private   Double        BPhaseAtPower;
+    private Double BPhaseAtPower;
     @TableField(value = "CPhaseAtPower")
-    private   Double CPhaseAtPower;
+    private Double CPhaseAtPower;
     @TableField(value = "ThreePhaseTotalAtPower")
-    private   Double        ThreePhaseTotalAtPower;
+    private Double ThreePhaseTotalAtPower;
     @TableField(value = "APhasePowerFactor")
-    private   Double APhasePowerFactor;
+    private Double APhasePowerFactor;
     @TableField(value = "BPhasePowerFactor")
-    private   Double        BPhasePowerFactor;
+    private Double BPhasePowerFactor;
     @TableField(value = "CPhasePowerFactor")
-    private   Double CPhasePowerFactor;
+    private Double CPhasePowerFactor;
     @TableField(value = "AveragePowerFactor")
-    private   Double        AveragePowerFactor;
+    private Double AveragePowerFactor;
     @TableField(value = "Frequency")
-    private   Double Frequency;
+    private Double Frequency;
     @TableField(value = "ForwardActive")
-    private   Double        ForwardActive;
+    private Double ForwardActive;
     @TableField(value = "ReverseActive")
-    private   Double ReverseActive;
+    private Double ReverseActive;
     @TableField(value = "ForwardReactiveWattage")
-    private   Double        ForwardReactiveWattage;
+    private Double ForwardReactiveWattage;
     @TableField(value = "ReverseReactiveWattage")
-    private  Double ReverseReactiveWattage;
+    private Double ReverseReactiveWattage;
     @TableField(value = "VoltageUnbalance")
-    private   Double        VoltageUnbalance;
+    private Double VoltageUnbalance;
     @TableField(value = "ElectricCurrentUnbalance")
-    private  Double ElectricCurrentUnbalance;
+    private Double ElectricCurrentUnbalance;
     @TableField(value = "APhaseVoltageHarmonicTotalDistortion")
-    private   Double        APhaseVoltageHarmonicTotalDistortion;
+    private Double APhaseVoltageHarmonicTotalDistortion;
     @TableField(value = "BPhaseVoltageHarmonicTotalDistortion")
-    private   Double BPhaseVoltageHarmonicTotalDistortion;
+    private Double BPhaseVoltageHarmonicTotalDistortion;
     @TableField(value = "CPhaseVoltageHarmonicTotalDistortion")
-    private  Double        CPhaseVoltageHarmonicTotalDistortion;
+    private Double CPhaseVoltageHarmonicTotalDistortion;
     @TableField(value = "TotalHarmonicDistortionOfAPhaseCurrent")
-    private   Double TotalHarmonicDistortionOfAPhaseCurrent;
+    private Double TotalHarmonicDistortionOfAPhaseCurrent;
     @TableField(value = "TotalHarmonicDistortionOfBPhaseCurrent")
-    private   Double        TotalHarmonicDistortionOfBPhaseCurrent;
+    private Double TotalHarmonicDistortionOfBPhaseCurrent;
 
     public Double getAPhaseElectricTension() {
         return APhaseElectricTension;
@@ -486,15 +486,16 @@ public class Datas {
     public void setMaximumReverseReactivePowerDemand(Double maximumReverseReactivePowerDemand) {
         MaximumReverseReactivePowerDemand = maximumReverseReactivePowerDemand;
     }
+
     @TableField(value = "TotalHarmonicDistortionOfCPhaseCurrent")
-    private   Double TotalHarmonicDistortionOfCPhaseCurrent;
+    private Double TotalHarmonicDistortionOfCPhaseCurrent;
     @TableField(value = "MaximumPositiveActiveDemand")
-    private   Double        MaximumPositiveActiveDemand;
+    private Double MaximumPositiveActiveDemand;
     @TableField(value = "MaximumReverseActiveDemand")
-    private   Double MaximumReverseActiveDemand;
+    private Double MaximumReverseActiveDemand;
     @TableField(value = "MaximumForwardReactivePowerDemand")
-    private  Double        MaximumForwardReactivePowerDemand;
+    private Double MaximumForwardReactivePowerDemand;
     @TableField(value = "MaximumReverseReactivePowerDemand")
-    private  Double MaximumReverseReactivePowerDemand;
+    private Double MaximumReverseReactivePowerDemand;
 
 }
