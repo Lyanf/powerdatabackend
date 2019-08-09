@@ -2,14 +2,11 @@ package dclab.powerdatabackend.dao;
 
 import dclab.powerdatabackend.model.Algorithmresult;
 import java.util.List;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.type.JdbcType;
+
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
+
 @Mapper
 @Repository
 public interface AlgorithmresultMapper {
@@ -20,8 +17,10 @@ public interface AlgorithmresultMapper {
      * @mbg.generated
      */
     @Insert({
-        "insert into algorithmresult (hash, result)",
-        "values (#{hash,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR})"
+        "insert into algorithmresult (hash, result, ",
+        "json)",
+        "values (#{hash,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, ",
+        "#{json,jdbcType=LONGVARCHAR})"
     })
     int insert(Algorithmresult record);
 
@@ -33,12 +32,13 @@ public interface AlgorithmresultMapper {
      */
     @Select({
         "select",
-        "hash, result",
+        "hash, result, json",
         "from algorithmresult"
     })
     @Results({
         @Result(column="hash", property="hash", jdbcType=JdbcType.VARCHAR),
-        @Result(column="result", property="result", jdbcType=JdbcType.VARCHAR)
+        @Result(column="result", property="result", jdbcType=JdbcType.VARCHAR),
+        @Result(column="json", property="json", jdbcType=JdbcType.LONGVARCHAR)
     })
     List<Algorithmresult> selectAll();
 }

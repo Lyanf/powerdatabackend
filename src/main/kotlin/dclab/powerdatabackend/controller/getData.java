@@ -36,9 +36,6 @@ public class getData {
         para.put("factory", dt.get("factory"));
         para.put("line", dt.get("line"));
         para.put("device", dt.get("device"));
-//        para.put("timestamp",dt.getTimestamp());
-        System.out.println(dt.get("timestamp"));
-        System.out.println(dt.get("timestamp").getClass());
         ArrayList<String> timestamp = (ArrayList<String>) dt.get("timestamp");
 
         String timestart = timestamp.get(0);
@@ -60,10 +57,7 @@ public class getData {
                 result.add(m);
             }
         }
-//        System.out.print(JSON.toJSONString(result));
-//        String str = "{status : 'Success',msg : 'h'}";
-        //转换字符串为JSONObject
-//        JSONObject result = JSONObject.parseObject(str);
+
         String tempJS = JSON.toJSONString(result);
         return tempJS;
     }
@@ -109,12 +103,13 @@ public class getData {
         }
         TreeTool tt = new TreeTool(rootList, bodyList);
         List<Map<String, Object>> result = tt.getTree();
-//        System.out.println(JSONObject.toJSON(list));
-//
-        System.out.print(JSONObject.toJSON(result));
         return JSONObject.toJSONString(result);
     }
-
+    @RequestMapping(value = "/getAllMeasurePoint", method = RequestMethod.POST)
+    @ResponseBody
+    public String getAllMeasurePoint() {
+        return JSONObject.toJSONString(ExcelOp.valueToKey().values());
+    }
     @RequestMapping(value = "/getMeasurePointData", method = RequestMethod.POST)
     @ResponseBody
     public String getMeasurePointData(@RequestBody Map<String, Object> dt) {

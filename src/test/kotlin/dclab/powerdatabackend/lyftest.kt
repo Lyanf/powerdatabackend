@@ -1,6 +1,5 @@
 package dclab.powerdatabackend
-
+import dclab.powerdatabackend.util.ExcelOp
 fun main() {
-    var a = 10
-    var b = "10"
+    ExcelOp.valueToKey()
 }

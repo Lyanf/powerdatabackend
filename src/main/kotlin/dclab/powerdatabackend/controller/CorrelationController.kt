@@ -6,6 +6,7 @@ import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import dclab.powerdatabackend.dao.CorrelationMapper
 import dclab.powerdatabackend.model.Correlation
+import dclab.powerdatabackend.util.ExcelOp
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RequestBody
@@ -27,7 +28,9 @@ class CorrelationController {
         val factory = data["factory"]
         val line = data["line"]
         val device = data["device"]
-        val measurePoint = data["measurePoint"]
+//        平常都用英文名了
+        var measurePoint = data["measurePoint"]
+        measurePoint = ExcelOp.getMeasurePointEnglishName(measurePoint)
         val allString = factory + line + device + measurePoint
         val md = MessageDigest.getInstance("MD5")
         md.update(allString.toByteArray())
