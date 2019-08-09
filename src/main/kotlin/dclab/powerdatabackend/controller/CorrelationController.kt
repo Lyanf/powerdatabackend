@@ -61,7 +61,12 @@ class CorrelationController {
             client.newCall(request).execute()
             return ""
         } else {
-            return result.result
+            val correlationValue = result.result
+            val correlationData = result.json
+            val allResult = JSONObject()
+            allResult.put("correlationValue",correlationValue)
+            allResult.put("correlationData",correlationData)
+            return allResult.toJSONString()
         }
     }
 

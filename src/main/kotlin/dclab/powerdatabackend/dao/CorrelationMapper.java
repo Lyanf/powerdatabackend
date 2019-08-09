@@ -17,8 +17,10 @@ public interface CorrelationMapper {
      * @mbg.generated
      */
     @Insert({
-        "insert into correlation (hash, result)",
-        "values (#{hash,jdbcType=VARCHAR}, #{result,jdbcType=LONGVARCHAR})"
+        "insert into correlation (hash, result, ",
+        "json)",
+        "values (#{hash,jdbcType=VARCHAR}, #{result,jdbcType=LONGVARCHAR}, ",
+        "#{json,jdbcType=LONGVARCHAR})"
     })
     int insert(Correlation record);
 
@@ -30,12 +32,13 @@ public interface CorrelationMapper {
      */
     @Select({
         "select",
-        "hash, result",
+        "hash, result, json",
         "from correlation"
     })
     @Results({
         @Result(column="hash", property="hash", jdbcType=JdbcType.VARCHAR),
-        @Result(column="result", property="result", jdbcType=JdbcType.LONGVARCHAR)
+        @Result(column="result", property="result", jdbcType=JdbcType.LONGVARCHAR),
+        @Result(column="json", property="json", jdbcType=JdbcType.LONGVARCHAR)
     })
     List<Correlation> selectAll();
 }
