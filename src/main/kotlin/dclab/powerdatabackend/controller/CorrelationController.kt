@@ -6,6 +6,7 @@ import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import dclab.powerdatabackend.dao.CorrelationMapper
 import dclab.powerdatabackend.model.Correlation
+import dclab.powerdatabackend.util.Constants
 import dclab.powerdatabackend.util.ExcelOp
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -55,8 +56,7 @@ class CorrelationController {
             jsonObject.put("device", device)
             jsonObject.put("measurePoint", measurePoint)
             val requestBody = com.squareup.okhttp.RequestBody.create(jsonType, jsonObject.toJSONString())
-            val algorithmURL = System.getenv("ALGORITHM_URL")
-            val apiURL = "${algorithmURL}/algorithm/correlation"
+            val apiURL = "${Constants.ALGORITHM_URL}/algorithm/correlation"
             val request = Request.Builder().url(apiURL).addHeader("Content-Type", "application/json;charset=utf-8").post(requestBody).build()
             client.newCall(request).execute()
             return ""

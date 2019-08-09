@@ -6,6 +6,7 @@ import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import dclab.powerdatabackend.dao.AlgorithmresultMapper
 import dclab.powerdatabackend.model.Algorithmresult
+import dclab.powerdatabackend.util.Constants
 import dclab.powerdatabackend.util.ExcelOp
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -56,8 +57,7 @@ class AlgorhtimController {
             jsonObject.put("device", device)
             jsonObject.put("measurePoint", measurePoint)
             val requestBody = com.squareup.okhttp.RequestBody.create(jsonType, jsonObject.toJSONString())
-            val algorithmURL = System.getenv("ALGORITHM_URL")
-            val apiURL = "${algorithmURL}/algorithm/predict"
+            val apiURL = "${Constants.ALGORITHM_URL}/algorithm/predict"
             val request = Request.Builder().url(apiURL).addHeader("Content-Type", "application/json;charset=utf-8").post(requestBody).build()
             client.newCall(request).execute()
             return ""
