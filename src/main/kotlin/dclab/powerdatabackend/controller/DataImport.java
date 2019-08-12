@@ -30,7 +30,7 @@ public class DataImport {
 
     @RequestMapping("/uploaddata")
     @ResponseBody
-    public String importExcel(@RequestParam(value="filename") MultipartFile file) {
+    public String importExcel(MultipartFile file) {
 
         if (file.isEmpty()) {
             String str = "{status : 'Failed',msg : '文件为空'}";
@@ -85,9 +85,7 @@ public class DataImport {
             }
 //            System.out.println(datalist.get(0));
             ExcelOp.insertAll("datas",datalist,dataSource.getConnection());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
         String str = "{status : 'Success',msg : '导入成功'}";

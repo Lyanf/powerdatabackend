@@ -79,10 +79,8 @@ public class ExcelOp {
         try
         {
 
-            Connection conn = con;
-
             String query = "SELECT DISTINCT factory,device,line FROM datas";
-            Statement st = conn.createStatement();
+            Statement st = con.createStatement();
 
             ResultSet rs = st.executeQuery(query);
             while (rs.next())
@@ -96,6 +94,7 @@ public class ExcelOp {
 
             }
             st.close();
+            con.close();
         }
         catch (Exception e)
         {
@@ -204,6 +203,60 @@ public class ExcelOp {
         map.put("MaximumReverseReactivePowerDemand","反向无功最大需量");
 
         return map;
+    }
+
+    public static String getMeasurePointEnglishName(String chineseName){
+        Map<String, String> map = new HashMap<>();
+        map.put("timestamp","时间");
+        map.put("APhaseElectricTension","A相电压");
+        map.put("BPhaseElectricTension","B相电压");
+        map.put("CPhaseElectricTension","C相电压");
+        map.put("ABLineElectricTension","AB线电压");
+        map.put("BCLineElectricTension","BC线电压");
+        map.put("CALineElectricTension","CA线电压");
+        map.put("APhaseElectricCurrent","A相电流");
+        map.put("BPhaseElectricCurrent","B相电流");
+        map.put("CPhaseElectricCurrent","C相电流");
+        map.put("ZeroSequenceCurrent","零序电流,");
+        map.put("APhaseActivePower","A相有功功率");
+        map.put("BPhaseActivePower","B相有功功率");
+        map.put("CPhaseActivePower","C相有功功率");
+        map.put("ThreePhaseTotalActivePower","三相总有功功率");
+        map.put("APhaseReactivePower","A相无功功率");
+        map.put("BPhaseReactivePower","B相无功功率");
+        map.put("CPhaseReactivePower","C相无功功率");
+        map.put("ThreePhaseTotalReactivePower","三相总无功功率");
+        map.put("APhaseAtPower","A相视在功率");
+        map.put("BPhaseAtPower","B相视在功率");
+        map.put("CPhaseAtPower","C相视在功率");
+        map.put("ThreePhaseTotalAtPower","三相总视在功率");
+        map.put("APhasePowerFactor","A相功率因数");
+        map.put("BPhasePowerFactor","B相功率因数");
+        map.put("CPhasePowerFactor","C相功率因数");
+        map.put("AveragePowerFactor","平均功率因数");
+        map.put("Frequency","频率");
+        map.put("ForwardActive","正向有功电度");
+        map.put("ReverseActive","反向有功电度");
+        map.put("ForwardReactiveWattage","正向无功电度");
+        map.put("ReverseReactiveWattage","反向无功电度");
+        map.put("VoltageUnbalance","电压不平衡度");
+        map.put("ElectricCurrentUnbalance","电流不平衡度");
+        map.put("APhaseVoltageHarmonicTotalDistortion","A相电压谐波总失真");
+        map.put("BPhaseVoltageHarmonicTotalDistortion","B相电压谐波总失真");
+        map.put("CPhaseVoltageHarmonicTotalDistortion","C相电压谐波总失真");
+        map.put("TotalHarmonicDistortionOfAPhaseCurrent","A相电流谐波总失真");
+        map.put("TotalHarmonicDistortionOfBPhaseCurrent","B相电流谐波总失真");
+        map.put("TotalHarmonicDistortionOfCPhaseCurrent","C相电流谐波总失真");
+        map.put("MaximumPositiveActiveDemand","正向有功最大需量");
+        map.put("MaximumReverseActiveDemand","反向有功最大需量");
+        map.put("MaximumForwardReactivePowerDemand","正向无功最大需量");
+        map.put("MaximumReverseReactivePowerDemand","反向无功最大需量");
+        for (String key:map.keySet()) {
+            if(map.get(key).equals(chineseName)){
+                return key;
+            }
+        }
+        return null;
     }
 
 }
