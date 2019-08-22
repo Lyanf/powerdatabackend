@@ -23,13 +23,14 @@ import java.util.Map;
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
-public class DataImport {
+public class DataImportController {
 
     @Autowired
     private DataSource dataSource;
 
     @RequestMapping("/uploaddata")
     @ResponseBody
+//    这个地方很坑，file是parameter的name！！！不是一个随便起的名字...
     public String importExcel(MultipartFile file) {
 
         if (file.isEmpty()) {
