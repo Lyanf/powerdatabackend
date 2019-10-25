@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 public class ExcelOp {
-    public static int insertAll(String tableName, List<Map<String, Object>> datas, Connection con) throws SQLException {
+    public static int insertAll(String tableName, List<Map<String, Object>> datas,Connection con) throws SQLException {
         int affectRowCount = -1;
 
         PreparedStatement preparedStatement = null;
@@ -106,7 +106,7 @@ public class ExcelOp {
 
     public static Map<String, String> dataStructure(){
         Map<String, String> map = new HashMap<>();
-        map.put("时间","timestamp");
+        map.put("时间","timestamps");
         map.put("A相电压","APhaseElectricTension");
         map.put("B相电压","BPhaseElectricTension");
         map.put("C相电压","CPhaseElectricTension");
