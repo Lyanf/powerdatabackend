@@ -30,7 +30,7 @@ class BaseLineController {
         val line = data["line"]
         val device = data["device"]
         val year = data["year"]
-        val month = data["month"]
+        val month = data["month"]!!.toInt()+1
         val day = data["day"]
 //        平常都用英文名了
         var measurePoint = data["measurePoint"]
