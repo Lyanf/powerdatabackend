@@ -1,0 +1,250 @@
+[
+    {
+        "value": "云南省省级数据",
+        "unit": "None",
+        "children": [
+            {
+                "value": "社会经济数据",
+                "unit": "None",
+                "children": [
+                    {
+                        "value": "全局类数据",
+                        "unit": "None",
+                        "children": [
+                            {
+                                "value": "GDP",
+                                "unit": "None",
+                                "children": [
+                                    {
+                                        "value": "年度GDP",
+                                        "unit": "亿元"
+                                    },
+                                    {
+                                        "value": "年度第一产业GDP",
+                                        "unit": "亿元"
+                                    },
+                                    {
+                                        "value": "年度第二产业GDP",
+                                        "unit": "亿元"
+                                    },
+                                    {
+                                        "value": "年度第三产业GDP",
+                                        "unit": "亿元"
+                                    }
+                                ]
+                            },
+                            {
+                                "value": "人口",
+                                "unit": "None",
+                                "children": [
+                                    {
+                                        "value": "城镇人口",
+                                        "unit": "万人"
+                                    },
+                                    {
+                                        "value": "农村人口",
+                                        "unit": "万人"
+                                    },
+                                    {
+                                        "value": "总人口",
+                                        "unit": "万人"
+                                    }
+                                ]
+                            },
+                            {
+                                "value": "收入",
+                                "unit": "None",
+                                "children": [
+                                    {
+                                        "value": "职工年平均工资",
+                                        "unit": "元"
+                                    },
+                                    {
+                                        "value": "城镇年平均收入",
+                                        "unit": "元"
+                                    },
+                                    {
+                                        "value": "农村年平均收入",
+                                        "unit": "元"
+                                    }
+                                ]
+                            },
+                            {
+                                "value": "消费",
+                                "unit": "None",
+                                "children": [
+                                    {
+                                        "value": "居民年平均消费水平",
+                                        "unit": "元"
+                                    },
+                                    {
+                                        "value": "城镇居民年平均消费水平",
+                                        "unit": "元"
+                                    },
+                                    {
+                                        "value": "农村居民年平均消费水平",
+                                        "unit": "元"
+                                    }
+                                ]
+                            },
+                            {
+                                "value": "耗能",
+                                "unit": "None",
+                                "children": [
+                                    {
+                                        "value": "电视机人均年覆盖率",
+                                        "unit": "%"
+                                    },
+                                    {
+                                        "value": "城镇居民每户空调器拥有量",
+                                        "unit": "台"
+                                    },
+                                    {
+                                        "value": "农村居民每户电冰箱拥有量",
+                                        "unit": "台"
+                                    },
+                                    {
+                                        "value": "城镇居民每户空调器拥有量",
+                                        "unit": "台"
+                                    },
+                                    {
+                                        "value": "集中供热面积",
+                                        "unit": "亿平方米"
+                                    },
+                                    {
+                                        "value": "年度公共汽电车营运车辆数",
+                                        "unit": "辆"
+                                    },
+                                    {
+                                        "value": "月度充电桩总量累积值",
+                                        "unit": "个"
+                                    },
+                                    {
+                                        "value": "月度专用充电桩累积值",
+                                        "unit": "个"
+                                    },
+                                    {
+                                        "value": "月度公用充电桩累积值",
+                                        "unit": "个"
+                                    },
+                                    {
+                                        "value": "月度直流充电桩累积值",
+                                        "unit": "个"
+                                    },
+                                    {
+                                        "value": "月度交流充电桩累积值",
+                                        "unit": "个"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "value": "行业类数据",
+                        "unit": "None",
+                        "children": [
+                            {
+                                "value": "重工业",
+                                "unit": "None",
+                                "children": [
+                                    {
+                                        "value": "采掘(伐)工业",
+                                        "unit": "None",
+                                        "children": [
+                                            {
+                                                "value": "年度锌矿产量",
+                                                "unit": "万吨"
+                                            },
+                                            {
+                                                "value": "年度铅矿产量",
+                                                "unit": "万吨"
+                                            },
+                                            {
+                                                "value": "年度高岭土产量",
+                                                "unit": "万吨"
+                                            },
+                                            {
+                                                "value": "年度磷矿产量",
+                                                "unit": "万吨"
+                                            },
+                                            {
+                                                "value": "年度铁矿产量",
+                                                "unit": "万吨"
+                                            },
+                                            {
+                                                "value": "年度硫铁矿产量",
+                                                "unit": "万吨"
+                                            },
+                                            {
+                                                "value": "年度锰矿产量",
+                                                "unit": "万吨"
+                                            },
+                                            {
+                                                "value": "月度原煤产量",
+                                                "unit": "万吨"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "value": "原材料工业",
+                                        "unit": "None",
+                                        "children": [
+                                            {
+                                                "value": "年度粗钢生产量",
+                                                "unit": "万吨"
+                                            },
+                                            {
+                                                "value": "年度钢材生产量",
+                                                "unit": "万吨"
+                                            },
+                                            {
+                                                "value": "月度度水泥生产量",
+                                                "unit": "万吨"
+                                            },
+                                            {
+                                                "value": "年度生铁生产量",
+                                                "unit": "万吨"
+                                            },
+                                            {
+                                                "value": "年度平板玻璃生产量",
+                                                "unit": "万重量箱"
+                                            },
+                                            {
+                                                "value": "年度电解铝产量",
+                                                "unit": "万吨"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "value": "加工制造工业",
+                                        "unit": "None",
+                                        "children": [
+                                            {
+                                                "value": "月度肥料生产量",
+                                                "unit": "万吨"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "value": "轻工业",
+                                "unit": "None"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "value": "电力数据"
+            },
+            {
+                "value": "气象数据"
+            },
+            {
+                "value": "昆明",
+                "unit": "None"
+            }
+        ]
+    }
+]
