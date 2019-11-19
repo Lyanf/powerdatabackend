@@ -30,7 +30,9 @@
         <javaClientGenerator targetPackage="dclab.powerdatabackend.dao" type="ANNOTATEDMAPPER" targetProject=".">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
-        <table schema="powersystem" tableName="baseline" enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table schema="powersystem" tableName="profileFeature" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>
+
+
     </context>
 </generatorConfiguration>
