@@ -39,7 +39,7 @@ class ClusterController {
         val allList = clusterMapper.selectAll()
         var result: Cluster? = null
         for (i in allList) {
-            if (i.hash == stringHash) {
+            if (i.hashstr == stringHash) {
                 result = i
                 break
             }

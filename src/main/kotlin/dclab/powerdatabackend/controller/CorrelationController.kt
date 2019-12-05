@@ -39,7 +39,7 @@ class CorrelationController {
         val allList = correlationMapper.selectAll()
         var result: Correlation? = null
         for (i in allList) {
-            if (i.hash == stringHash) {
+            if (i.hashstr == stringHash) {
                 result = i
                 break
             }
