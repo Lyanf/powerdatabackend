@@ -14,9 +14,9 @@ interface OldFileMapper {
     Select("SELECT * FROM `file`")
     val fileList: List<FileInfo>
 
-    @Insert("INSERT INTO `file`(fileName,location) VALUES (#{fileName},#{location})")
+    @Insert("INSERT INTO `file`(filename,locations) VALUES (#{fileName},#{location})")
     fun InsertFile(file: FileInfo): Int
 
-    @Select("SELECT * from `file` where fileID = #{fileID}")
+    @Select("SELECT * from `file` where fileid = #{fileID}")
     fun getFileByID(fileID: Int): FileInfo
 }

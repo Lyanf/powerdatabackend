@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository
 interface OldDataMapper {
     @Select("select * from data where " +
             "measurePoint like #{measurePoint}  and " +
-            "location like #{location}  and " +
-            "#{startTime} <= date and " +
-            "#{endTime} >= date")
+            "locations like #{location}  and " +
+            "#{startTime} <= dates and " +
+            "#{endTime} >= dates")
     fun getSearchArray(measurePoint: String,
                        location: String,
                        startTime: String,
