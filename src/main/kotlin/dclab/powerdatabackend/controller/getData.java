@@ -74,13 +74,14 @@ public class getData {
         para.put("factory", dt.get("factory"));
         para.put("line", dt.get("line"));
         para.put("device", dt.get("device"));
+        String device = (String)dt.get("device");
         ArrayList<String> timestamp = (ArrayList<String>) dt.get("timestamp");
 
         String timestart = timestamp.get(0).substring(0,10);
         String timeend = timestamp.get(1).substring(0,10);
 
 
-        List<Map<String, Object>> res = new DbOperation().getAll("rtdata",timestart,timeend,dataSource.getConnection());
+        List<Map<String, Object>> res = new DbOperation().getAllBydevice("rtdata",timestart,timeend,device ,dataSource.getConnection());
         System.out.println(res.size());
 
 
@@ -93,7 +94,7 @@ public class getData {
     @ResponseBody
     public String getMetaDataTree() throws SQLException {
 
-        List<Map<String, String>> list = ExcelOp.selectMetadata("datas", dataSource.getConnection());
+        List<Map<String, String>> list = ExcelOp.selectMetadata( dataSource.getConnection());
 
         List<Map<String, Object>> rootList = new ArrayList<>();
 
@@ -133,8 +134,12 @@ public class getData {
     }
     @RequestMapping(value = "/getAllMeasurePoint", method = RequestMethod.POST)
     @ResponseBody
-    public String getAllMeasurePoint() {
-        return JSONObject.toJSONString(ExcelOp.valueToKey().values());
+    public String getAllMeasurePoint() throws SQLException {
+//        System.out.println(ExcelOp.valueToKey().values());
+        List<String> l = new ArrayList<>();
+        l = new DbOperation().getMeasurePoint("rtdata",dataSource.getConnection());
+//        return JSONObject.toJSONString(ExcelOp.valueToKey().values());
+        return JSONObject.toJSONString(l);
     }
     @RequestMapping(value = "/getMeasurePointData", method = RequestMethod.POST)
     @ResponseBody

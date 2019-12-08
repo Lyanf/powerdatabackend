@@ -74,21 +74,21 @@ public class ExcelOp {
 
     }
 
-    public static List<Map<String, String>> selectMetadata(String tableName, Connection con){
+    public static List<Map<String, String>> selectMetadata( Connection con){
         List<Map<String,String>> res = new ArrayList<>();
         try
         {
 
-            String query = "SELECT DISTINCT factory,device,line FROM datas";
+            String query = "SELECT DISTINCT customerid,meterid FROM rtdata";
             Statement st = con.createStatement();
 
             ResultSet rs = st.executeQuery(query);
             while (rs.next())
             {
                 Map<String, String> map = new HashMap<>();
-                map.put("factory",rs.getString("factory"));
-                map.put("line", rs.getString("line"));
-                map.put("device", rs.getString("device"));
+                map.put("factory",rs.getString("customerid"));
+                map.put("line", rs.getString("customerid"));
+                map.put("device", rs.getString("meterid"));
                 res.add(map);
 
 
