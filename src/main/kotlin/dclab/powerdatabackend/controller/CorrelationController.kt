@@ -39,11 +39,19 @@ class CorrelationController {
         val allList = correlationMapper.selectAll()
         var result: Correlation? = null
         for (i in allList) {
+
             if (i.hashstr == stringHash) {
+
+
                 result = i
                 break
+
+
+
             }
         }
+
+
         println("\n-----------correlation接收参数------------")
         println("/${factory}/${line}/${device}/${measurePoint}")
         println("-----------correlation接收参数------------")

@@ -17,7 +17,7 @@ public interface ProfilefeatureMapper {
      * @mbg.generated
      */
     @Insert({
-        "insert into profileFeature (hash, json)",
+        "insert into profileFeature (hashstr, json)",
         "values (#{hash,jdbcType=VARCHAR}, #{json,jdbcType=LONGVARCHAR})"
     })
     int insert(Profilefeature record);
@@ -30,11 +30,11 @@ public interface ProfilefeatureMapper {
      */
     @Select({
         "select",
-        "hash, json",
+        "hashstr, json",
         "from profileFeature"
     })
     @Results({
-        @Result(column="hash", property="hash", jdbcType=JdbcType.VARCHAR),
+        @Result(column="hashstr", property="hash", jdbcType=JdbcType.VARCHAR),
         @Result(column="json", property="json", jdbcType=JdbcType.LONGVARCHAR)
     })
     List<Profilefeature> selectAll();

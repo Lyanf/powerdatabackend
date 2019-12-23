@@ -33,7 +33,7 @@ class ProfileFeature {
         val line = data["line"]
         val device = data["device"]
         var measurePoint = data["measurePoint"]
-        measurePoint = ExcelOp.getMeasurePointEnglishName(measurePoint)
+//        measurePoint = ExcelOp.getMeasurePointEnglishName(measurePoint)
         val allString = factory + line + device + measurePoint
         val md = MessageDigest.getInstance("MD5")
         md.update(allString.toByteArray())

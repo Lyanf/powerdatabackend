@@ -15,7 +15,7 @@ interface ClusterMapper {
      *
      * @mbg.generated
      */
-    @Insert("insert into sjtudb.cluster (hashstr, json)", "values (#{hashstr,jdbcType=VARCHAR}, #{json,jdbcType=VARCHAR})")
+    @Insert("insert into sjtudb.clusterresult (hashstr, json)", "values (#{hashstr,jdbcType=VARCHAR}, #{json,jdbcType=VARCHAR})")
     fun insert(record: Cluster): Int
 
     /**
@@ -24,7 +24,7 @@ interface ClusterMapper {
      *
      * @mbg.generated
      */
-    @Select("select", "hashstr, json", "from sjtudb.cluster")
+    @Select("select", "hashstr, json", "from sjtudb.clusterresult")
     @Results(Result(column = "hashstr", property = "hashstr", jdbcType = JdbcType.VARCHAR), Result(column = "json", property = "json", jdbcType = JdbcType.VARCHAR))
     fun selectAll(): List<Cluster>
 }
