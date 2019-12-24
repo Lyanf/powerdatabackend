@@ -34,7 +34,7 @@ class BaseLineController {
         val day = data["day"]
 //        平常都用英文名了
         var measurePoint = data["measurePoint"]
-        measurePoint = ExcelOp.getMeasurePointEnglishName(measurePoint)
+//        measurePoint = ExcelOp.getMeasurePointEnglishName(measurePoint)
         val allString = factory + line + device + measurePoint
         val md = MessageDigest.getInstance("MD5")
         md.update(allString.toByteArray())
@@ -45,6 +45,7 @@ class BaseLineController {
             if (i.hash == stringHash) {
                 result = i
                 break
+
             }
         }
         println("\n-----------baseLine接收参数------------")

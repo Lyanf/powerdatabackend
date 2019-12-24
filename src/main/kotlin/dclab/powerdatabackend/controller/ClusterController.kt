@@ -31,7 +31,7 @@ class ClusterController {
         val device = data["device"]
 //        平常都用英文名了
         var measurePoint = data["measurePoint"]
-        measurePoint = ExcelOp.getMeasurePointEnglishName(measurePoint)
+//        measurePoint = ExcelOp.getMeasurePointEnglishName(measurePoint)
         val allString = factory + line + device + measurePoint
         val md = MessageDigest.getInstance("MD5")
         md.update(allString.toByteArray())
@@ -39,9 +39,12 @@ class ClusterController {
         val allList = clusterMapper.selectAll()
         var result: Cluster? = null
         for (i in allList) {
-            if (i.hash == stringHash) {
+
+            if (i.hashstr == stringHash) {
+
                 result = i
                 break
+
             }
         }
         println("\n-----------cluster接收参数------------")

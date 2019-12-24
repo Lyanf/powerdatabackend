@@ -20,11 +20,11 @@ import javax.xml.bind.DatatypeConverter
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
-class AlgorhtimController {
+class AlgorithmController {
     val formType = MediaType.parse("multipart/form-data")
     val jsonType = MediaType.parse("application/json; charset=utf-8")
     @Autowired
-    lateinit var algorithmResult: AlgorithmresultMapper
+    lateinit var algorithmresult: AlgorithmresultMapper
 
     @RequestMapping("/predict")
     fun predict(@RequestBody data: Map<String, String>): String {
@@ -32,15 +32,16 @@ class AlgorhtimController {
         val line = data["line"]
         val device = data["device"]
         var measurePoint = data["measurePoint"]
-        measurePoint = ExcelOp.getMeasurePointEnglishName(measurePoint)
+//        measurePoint = ExcelOp.getMeasurePointEnglishName(measurePoint)
         val allString = factory + line + device + measurePoint
         val md = MessageDigest.getInstance("MD5")
         md.update(allString.toByteArray())
         val stringHash = (DatatypeConverter.printHexBinary(md.digest())).toLowerCase()
-        val allList = algorithmResult.selectAll()
+        val allList = algorithmresult.selectAll()
         var result: Algorithmresult? = null
         for (i in allList) {
-            if (i.hash == stringHash) {
+            if (i.hashstr == stringHash) {
+
                 result = i
                 break
             }

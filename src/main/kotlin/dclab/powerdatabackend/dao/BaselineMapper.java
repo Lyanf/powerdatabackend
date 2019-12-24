@@ -17,7 +17,7 @@ public interface BaselineMapper {
      * @mbg.generated
      */
     @Insert({
-        "insert into baseline (hash, json)",
+        "insert into baseline (hashstr, json)",
         "values (#{hash,jdbcType=VARCHAR}, #{json,jdbcType=LONGVARCHAR})"
     })
     int insert(Baseline record);
@@ -30,11 +30,11 @@ public interface BaselineMapper {
      */
     @Select({
         "select",
-        "hash, json",
+        "hashstr, json",
         "from baseline"
     })
     @Results({
-        @Result(column="hash", property="hash", jdbcType=JdbcType.VARCHAR),
+        @Result(column="hashstr", property="hash", jdbcType=JdbcType.VARCHAR),
         @Result(column="json", property="json", jdbcType=JdbcType.LONGVARCHAR)
     })
     List<Baseline> selectAll();

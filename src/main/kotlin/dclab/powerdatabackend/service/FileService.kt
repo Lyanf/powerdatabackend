@@ -81,10 +81,10 @@ class FileService {
 //        在原有代码上修修补补，但是不破坏原来的逻辑
         var newFile = dclab.powerdatabackend.model.File()
         newFile.filename = fi.fileName
-        newFile.location = fi.location
+        newFile.locations = fi.location
         newFile.createtime = LocalDateTime.now().toString()
         newFile.creator = "alvis"
-        newFile.type = "源数据"
+        newFile.types = "源数据"
         newFile.size = humanReadableByteCount(file.size,true)
 //        oldFileMapper!!.InsertFile(fi)
 //        val fileI = oldFileMapper!!.fileList

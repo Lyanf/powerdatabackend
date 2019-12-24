@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 public class ExcelOp {
-    public static int insertAll(String tableName, List<Map<String, Object>> datas, Connection con) throws SQLException {
+    public static int insertAll(String tableName, List<Map<String, Object>> datas,Connection con) throws SQLException {
         int affectRowCount = -1;
 
         PreparedStatement preparedStatement = null;
@@ -74,21 +74,21 @@ public class ExcelOp {
 
     }
 
-    public static List<Map<String, String>> selectMetadata(String tableName, Connection con){
+    public static List<Map<String, String>> selectMetadata( Connection con){
         List<Map<String,String>> res = new ArrayList<>();
         try
         {
 
-            String query = "SELECT DISTINCT factory,device,line FROM datas";
+            String query = "SELECT DISTINCT customerid,meterid FROM rtdata";
             Statement st = con.createStatement();
 
             ResultSet rs = st.executeQuery(query);
             while (rs.next())
             {
                 Map<String, String> map = new HashMap<>();
-                map.put("factory",rs.getString("factory"));
-                map.put("line", rs.getString("line"));
-                map.put("device", rs.getString("device"));
+                map.put("factory",rs.getString("customerid"));
+                map.put("line", rs.getString("customerid"));
+                map.put("device", rs.getString("meterid"));
                 res.add(map);
 
 
@@ -106,7 +106,7 @@ public class ExcelOp {
 
     public static Map<String, String> dataStructure(){
         Map<String, String> map = new HashMap<>();
-        map.put("时间","timestamp");
+        map.put("时间","timestamps");
         map.put("A相电压","APhaseElectricTension");
         map.put("B相电压","BPhaseElectricTension");
         map.put("C相电压","CPhaseElectricTension");
