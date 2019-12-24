@@ -17,12 +17,12 @@ import java.util.*;
 @RequestMapping("/api")
 public class OlapController {
     public MediaType jsonType = MediaType.parse("application/json; charset=utf-8");
-    public String slicecsv = "D:\\Project\\dclab\\电力项目\\Powerdata\\poweralgorithm\\slice.csv";
-    public String drillcsv = "D:\\Project\\dclab\\电力项目\\Powerdata\\poweralgorithm\\drill.csv";
-    public String rotatecsv = "D:\\Project\\dclab\\电力项目\\Powerdata\\poweralgorithm\\rotate.csv";
-//    public String slicecsv = "/home/pcsjtu/power/poweralgorithm/slice.csv";
-//    public String drillcsv = "/home/pcsjtu/power/poweralgorithm/drill.csv";
-//    public String rotatecsv = "/home/pcsjtu/power/poweralgorithm/rotate.csv";
+//    public String slicecsv = "D:\\Project\\dclab\\电力项目\\Powerdata\\poweralgorithm\\slice.csv";
+//    public String drillcsv = "D:\\Project\\dclab\\电力项目\\Powerdata\\poweralgorithm\\drill.csv";
+//    public String rotatecsv = "D:\\Project\\dclab\\电力项目\\Powerdata\\poweralgorithm\\rotate.csv";
+    public String slicecsv = "/home/pcsjtu/power/poweralgorithm/slice.csv";
+    public String drillcsv = "/home/pcsjtu/power/poweralgorithm/drill.csv";
+    public String rotatecsv = "/home/pcsjtu/power/poweralgorithm/rotate.csv";
     public ArrayList<String[]> readCsv(String path) {
         ArrayList<String[]> csvFileList = new ArrayList<String[]>();
         String[] strs = null;
@@ -68,17 +68,19 @@ public class OlapController {
 
         ArrayList<String> group = new ArrayList<>();
         String agg = "";
-        if(p4 == "用户" || p4 == "天"){
+        if(p4.equals("用户") || p4.equals("天")){
             group.add("date");
-        }else if(p4 == "设备"){
+        }else if(p4.equals("设备")){
+
             group.add("device");
-        }else if(p4 == "设备+天"){
+        }else if(p4.equals("设备+天")){
+
             group.add("device");
             group.add("date");
         }
-        if(p5 == "求和"){
+        if(p5.equals("求和")){
             agg = "sum";
-        }else if(p5 == "求平均"){
+        }else if(p5.equals("求平均")){
             agg = "mean";
         }
         File file = new File(slicecsv);
@@ -158,16 +160,16 @@ public class OlapController {
 
         int timeMode = 0;
         int zoneMode = 0;
-        if(p4 == "分钟"){
+        if(p4.equals("分钟")){
             timeMode = 0;
-        }else if(p4 == "天"){
+        }else if(p4.equals( "天")){
             timeMode = 1;
-        }else if(p4 == "月"){
+        }else if(p4.equals("月")){
             timeMode = 2;
         }
-        if(p5 == "设备"){
+        if(p5.equals("设备")){
             zoneMode = 0;
-        }else if(p5 == "用户"){
+        }else if(p5.equals("用户")){
             zoneMode = 1;
         }
         List<Object> result = new ArrayList<>();
@@ -247,17 +249,17 @@ public class OlapController {
         ArrayList<String> group = new ArrayList<>();
         
         String agg = "";
-        if(p4 == "用户" || p4 == "天"){
+        if(p4.equals("用户") || p4.equals("天")){
             group.add("date");
-        }else if(p4 == "设备"){
+        }else if(p4.equals("设备")){
             group.add("device");
-        }else if(p4 == "设备+天"){
+        }else if(p4.equals("设备+天")){
             group.add("device");
             group.add("date");
         }
-        if(p5 == "求和"){
+        if(p5.equals("求和")){
             agg = "sum";
-        }else if(p5 == "求平均"){
+        }else if(p5.equals("求平均")){
             agg = "mean";
         }
         File file = new File(rotatecsv);
