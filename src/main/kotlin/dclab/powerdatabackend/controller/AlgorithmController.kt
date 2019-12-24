@@ -32,7 +32,7 @@ class AlgorithmController {
         val line = data["line"]
         val device = data["device"]
         var measurePoint = data["measurePoint"]
-        measurePoint = ExcelOp.getMeasurePointEnglishName(measurePoint)
+//        measurePoint = ExcelOp.getMeasurePointEnglishName(measurePoint)
         val allString = factory + line + device + measurePoint
         val md = MessageDigest.getInstance("MD5")
         md.update(allString.toByteArray())
@@ -41,6 +41,7 @@ class AlgorithmController {
         var result: Algorithmresult? = null
         for (i in allList) {
             if (i.hashstr == stringHash) {
+
                 result = i
                 break
             }

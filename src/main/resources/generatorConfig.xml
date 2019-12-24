@@ -30,6 +30,7 @@
         <javaClientGenerator targetPackage="dclab.powerdatabackend.dao" type="ANNOTATEDMAPPER" targetProject=".">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
+
 <!--        <table schema="powersystem" tableName="cluster" enableCountByExample="false" enableDeleteByExample="false"-->
 <!--               enableSelectByExample="false" enableUpdateByExample="false"/>-->
         <table schema="sjtudb" tableName="file" enableCountByExample="false" enableDeleteByExample="false"

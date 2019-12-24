@@ -99,6 +99,13 @@
 <!--            <scope>system</scope>-->
 <!--            <systemPath>${pom.basedir}/src/main/resources/lib/inceptor-driver-6.0.1_2.jar</systemPath>-->
         </dependency>
+
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>4.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
