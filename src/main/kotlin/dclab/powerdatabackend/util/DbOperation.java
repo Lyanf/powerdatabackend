@@ -134,4 +134,35 @@ public class DbOperation {
         }
         return re;
     }
+
+    public List<String> getOlapResult(String tableName,String hashname, Connection con) throws SQLException {
+        PreparedStatement preparedStatement = null;
+        StringBuilder sql = new StringBuilder();
+        sql.append("Select json from ");
+        sql.append(tableName);
+        sql.append(" where hashname = '" + hashname + "'");
+        List<String> re = new ArrayList<>();
+
+        try {
+            preparedStatement = con.prepareStatement(sql.toString());
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+
+                re.add(rs.getString("json"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return re;
+    }
 }
