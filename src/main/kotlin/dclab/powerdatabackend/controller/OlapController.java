@@ -2,27 +2,31 @@ package dclab.powerdatabackend.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONType;
+import com.google.common.base.Joiner;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVReader;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.sql.DataSource;
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.io.*;
 import java.util.*;
-
+import dclab.powerdatabackend.util.DbOperation;
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class OlapController {
     public MediaType jsonType = MediaType.parse("application/json; charset=utf-8");
-//    public String slicecsv = "D:\\Project\\dclab\\电力项目\\Powerdata\\poweralgorithm\\slice.csv";
-//    public String drillcsv = "D:\\Project\\dclab\\电力项目\\Powerdata\\poweralgorithm\\drill.csv";
-//    public String rotatecsv = "D:\\Project\\dclab\\电力项目\\Powerdata\\poweralgorithm\\rotate.csv";
-    public String slicecsv = "/home/pcsjtu/power/poweralgorithm/slice.csv";
-    public String drillcsv = "/home/pcsjtu/power/poweralgorithm/drill.csv";
-    public String rotatecsv = "/home/pcsjtu/power/poweralgorithm/rotate.csv";
+    @Autowired
+    private DataSource dataSource;
     public ArrayList<String[]> readCsv(String path) {
         ArrayList<String[]> csvFileList = new ArrayList<String[]>();
         String[] strs = null;
@@ -45,9 +49,10 @@ public class OlapController {
         return csvFileList;
     }
 
+
     @RequestMapping(value = "/qiepian", method = RequestMethod.POST)
     @ResponseBody
-    public String olapSlice(@RequestBody Map<String, Object> dt) throws IOException {
+    public String olapSlice(@RequestBody Map<String, Object> dt) throws IOException, NoSuchAlgorithmException, SQLException {
         ArrayList<ArrayList<String>> p1 = (ArrayList<ArrayList<String>>)dt.get("p1");
         ArrayList<String> device =  new ArrayList<>();
         ArrayList<Integer> factory = new ArrayList<>();
@@ -83,38 +88,18 @@ public class OlapController {
         }else if(p5.equals("求平均")){
             agg = "mean";
         }
-        File file = new File(slicecsv);
-        List<Object> result = new ArrayList<>();
-        List<Map<String, Object>> content = new ArrayList<>();
-        List<Map<String,Object>> header = new ArrayList<>();
-        if(file.exists()){
-            ArrayList<String[]> re = readCsv(slicecsv);
-            boolean flag = false;
 
-            for (String[] s : re){
-                Map<String,Object> m = new HashMap<>();
+        String allString =  Joiner.on("").join(factory) + String.join("", timeRange) + String.join("", device) + String.join("", measurePoint) + String.join("", group) +agg;
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(allString.getBytes());
+        String stringHash = (DatatypeConverter.printHexBinary(md.digest())).toLowerCase();
+        List<String> res = new DbOperation().getOlapResult("olapresult", stringHash, dataSource.getConnection());
 
-                for (int i = 0; i < s.length; i++){
-                    if(!flag){
-                        Map<String,Object> h = new HashMap<>();
-                        h.put("prop",s[i]);
-                        h.put("label",s[i]);
-                        header.add(h);
-                    }else{
-                        m.put((String)header.get(i).get("prop"),s[i]);
-                    }
-
-                }
-                if(flag)content.add(m);
-
-                flag = true;
-            }
-            if(file.delete()){
-                System.out.println(file.getName() + " 文件已被删除！");
-            }else{
-                System.out.println("文件删除失败！");
-            }
+        if(res.size() != 0){
+            return res.get(0);
         }else{
+
+            if((int)dt.get("count") != 0)return "";
             OkHttpClient client =new OkHttpClient();
             JSONObject jsonObject =new JSONObject();
             jsonObject.put("factory", factory);
@@ -123,22 +108,21 @@ public class OlapController {
             jsonObject.put("measurePoint", measurePoint);
             jsonObject.put("group", group);
             jsonObject.put("agg", agg);
+            jsonObject.put("hashname",stringHash);
             com.squareup.okhttp.RequestBody requestBody = com.squareup.okhttp.RequestBody.create(jsonType, jsonObject.toJSONString());
             String apiURL = "http://localhost:5000/algorithm/olapslice";
-            com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder().url(apiURL).addHeader("Content-Type", "application/json;charset=utf-8").post(requestBody).build();
+            Request request = new Request.Builder().url(apiURL).addHeader("Content-Type", "application/json;charset=utf-8").post(requestBody).build();
             client.newCall(request).execute();
             return "";
         }
 
-        Map<String, Object> tmp = new HashMap<>();
-        tmp.put("header",header);
-        tmp.put("content",content);
-        result.add(tmp);
-        return JSONObject.toJSONString(result);
     }
+
+
+
     @RequestMapping(value = "/zuanqu", method = RequestMethod.POST)
     @ResponseBody
-    public String olapDrill(@RequestBody Map<String, Object> dt) throws IOException {
+    public String olapDrill(@RequestBody Map<String, Object> dt) throws IOException, NoSuchAlgorithmException, SQLException {
         ArrayList<ArrayList<String>> p1 = (ArrayList<ArrayList<String>>)dt.get("p1");
         ArrayList<String> device =  new ArrayList<>();
         ArrayList<Integer> factory = new ArrayList<>();
@@ -175,33 +159,18 @@ public class OlapController {
         List<Object> result = new ArrayList<>();
         List<Map<String, Object>> content = new ArrayList<>();
         List<Map<String,Object>> header = new ArrayList<>();
-        File file = new File(drillcsv);
-        if(file.exists()){
-            ArrayList<String[]> re = readCsv(drillcsv);
-            boolean flag = false;
 
-            for (String[] s : re){
-                Map<String,Object> m = new HashMap<>();
-                for (int i = 0; i < s.length; i++){
-                    if(!flag){
-                        Map<String,Object> h = new HashMap<>();
-                        h.put("prop",s[i]);
-                        h.put("label",s[i]);
-                        header.add(h);
-                    }else{
-                        m.put((String)header.get(i).get("prop"),s[i]);
-                    }
+        String allString =  Joiner.on("").join(factory) + String.join("", timeRange) + String.join("", device) + String.join("", measurePoint) +  String.valueOf(timeMode) +String.valueOf(zoneMode);
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(allString.getBytes());
+        String stringHash = (DatatypeConverter.printHexBinary(md.digest())).toLowerCase();
 
-                }
-                if(flag)content.add(m);
-                flag = true;
-            }
-            if(file.delete()){
-                System.out.println(file.getName() + " 文件已被删除！");
-            }else{
-                System.out.println("文件删除失败！");
-            }
+        List<String> res = new DbOperation().getOlapResult("olapresult", stringHash, dataSource.getConnection());
+
+        if(res.size() != 0){
+            return res.get(0);
         }else{
+            if((int)dt.get("count") != 0)return "";
             OkHttpClient client =new OkHttpClient();
             JSONObject jsonObject =new JSONObject();
             jsonObject.put("factory", factory);
@@ -210,6 +179,7 @@ public class OlapController {
             jsonObject.put("measurePoint", measurePoint);
             jsonObject.put("timeMode", timeMode);
             jsonObject.put("zoneMode", zoneMode);
+            jsonObject.put("hashname",stringHash);
             com.squareup.okhttp.RequestBody requestBody = com.squareup.okhttp.RequestBody.create(jsonType, jsonObject.toJSONString());
             String apiURL = "http://localhost:5000/algorithm/olapdrill";
 //        System.out.println(apiURL);
@@ -217,17 +187,12 @@ public class OlapController {
             client.newCall(request).execute();
             return "";
         }
-        Map<String, Object> tmp = new HashMap<>();
-        tmp.put("header",header);
-        tmp.put("content",content);
-        result.add(tmp);
 
-        return JSONObject.toJSONString(result);
     }
 
     @RequestMapping(value = "/xuanzhuan", method = RequestMethod.POST)
     @ResponseBody
-    public String olapRotate(@RequestBody Map<String, Object> dt) throws IOException {
+    public String olapRotate(@RequestBody Map<String, Object> dt) throws IOException, NoSuchAlgorithmException, SQLException {
         ArrayList<ArrayList<String>> p1 = (ArrayList<ArrayList<String>>)dt.get("p1");
         ArrayList<String> device =  new ArrayList<>();
         ArrayList<Integer> factory = new ArrayList<>();
@@ -262,38 +227,18 @@ public class OlapController {
         }else if(p5.equals("求平均")){
             agg = "mean";
         }
-        File file = new File(rotatecsv);
-        List<Object> result = new ArrayList<>();
-        List<Map<String, Object>> content = new ArrayList<>();
-        List<Map<String,Object>> header = new ArrayList<>();
-        if(file.exists()){
-            ArrayList<String[]> re = readCsv(rotatecsv);
-            boolean flag = false;
+        String os = System.getProperty("os.name");
 
-            for (String[] s : re){
-                Map<String,Object> m = new HashMap<>();
+        String allString =  Joiner.on("").join(factory) + String.join("", timeRange) + String.join("", device) + String.join("", measurePoint) + String.join("", group) +agg + "rotate";
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(allString.getBytes());
+        String stringHash = (DatatypeConverter.printHexBinary(md.digest())).toLowerCase();
+        List<String> res = new DbOperation().getOlapResult("olapresult", stringHash, dataSource.getConnection());
 
-                for (int i = 0; i < s.length; i++){
-                    if(!flag){
-                        Map<String,Object> h = new HashMap<>();
-                        h.put("prop",s[i]);
-                        h.put("label",s[i]);
-                        header.add(h);
-                    }else{
-                        m.put((String)header.get(i).get("prop"),s[i]);
-                    }
-
-                }
-                if(flag)content.add(m);
-
-                flag = true;
-            }
-            if(file.delete()){
-                System.out.println(file.getName() + " 文件已被删除！");
-            }else{
-                System.out.println("文件删除失败！");
-            }
+        if(res.size() != 0){
+            return res.get(0);
         }else{
+            if((int)dt.get("count") != 0)return "";
             OkHttpClient client =new OkHttpClient();
             JSONObject jsonObject =new JSONObject();
             jsonObject.put("factory", factory);
@@ -302,6 +247,7 @@ public class OlapController {
             jsonObject.put("measurePoint", measurePoint);
             jsonObject.put("group", group);
             jsonObject.put("agg", agg);
+            jsonObject.put("hashname",stringHash);
             com.squareup.okhttp.RequestBody requestBody = com.squareup.okhttp.RequestBody.create(jsonType, jsonObject.toJSONString());
             String apiURL = "http://localhost:5000/algorithm/olaprotate";
             com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder().url(apiURL).addHeader("Content-Type", "application/json;charset=utf-8").post(requestBody).build();
@@ -309,11 +255,6 @@ public class OlapController {
             return "";
         }
 
-        Map<String, Object> tmp = new HashMap<>();
-        tmp.put("header",header);
-        tmp.put("content",content);
-        result.add(tmp);
-        return JSONObject.toJSONString(result);
     }
 
 }
