@@ -19,6 +19,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 import dclab.powerdatabackend.util.DbOperation;
 @CrossOrigin
 @RestController
@@ -27,27 +29,6 @@ public class OlapController {
     public MediaType jsonType = MediaType.parse("application/json; charset=utf-8");
     @Autowired
     private DataSource dataSource;
-    public ArrayList<String[]> readCsv(String path) {
-        ArrayList<String[]> csvFileList = new ArrayList<String[]>();
-        String[] strs = null;
-        try {
-            DataInputStream in = new DataInputStream(new FileInputStream(new File(path)));
-// CSVReader csvReader = new CSVReader(new InputStreamReader(in,"GBK"));
-            CSVReader csvReader = new CSVReader(new InputStreamReader(in, "GBK"), CSVParser.DEFAULT_SEPARATOR,
-                    CSVParser.DEFAULT_QUOTE_CHARACTER, CSVParser.DEFAULT_ESCAPE_CHARACTER, 0);
-
-            while ((strs = csvReader.readNext()) != null) {
-//                System.out.println(Arrays.deepToString(strs));
-                Arrays.deepToString(strs);
-                csvFileList.add(strs);
-            }
-            csvReader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return csvFileList;
-    }
 
 
     @RequestMapping(value = "/qiepian", method = RequestMethod.POST)
@@ -99,8 +80,10 @@ public class OlapController {
             return res.get(0);
         }else{
 
-            if((int)dt.get("count") != 0)return "";
+
             OkHttpClient client =new OkHttpClient();
+            client.setConnectTimeout(0, TimeUnit.SECONDS); // connect timeout
+            client.setReadTimeout(0, TimeUnit.SECONDS);    // socket timeout
             JSONObject jsonObject =new JSONObject();
             jsonObject.put("factory", factory);
             jsonObject.put("timeRange", timeRange);
@@ -112,8 +95,15 @@ public class OlapController {
             com.squareup.okhttp.RequestBody requestBody = com.squareup.okhttp.RequestBody.create(jsonType, jsonObject.toJSONString());
             String apiURL = "http://localhost:5000/algorithm/olapslice";
             Request request = new Request.Builder().url(apiURL).addHeader("Content-Type", "application/json;charset=utf-8").post(requestBody).build();
-            client.newCall(request).execute();
-            return "";
+            com.squareup.okhttp.Response re = client.newCall(request).execute();
+            JSONObject data = JSONObject.parseObject(re.body().string());
+
+            if(!data.get("status").toString().equals("success")){
+                return data.toJSONString();
+            }
+            List<String> olapre = new DbOperation().getOlapResult("olapresult", data.get("msg").toString(), dataSource.getConnection());
+
+            return olapre.get(0);
         }
 
     }
@@ -170,8 +160,10 @@ public class OlapController {
         if(res.size() != 0){
             return res.get(0);
         }else{
-            if((int)dt.get("count") != 0)return "";
+
             OkHttpClient client =new OkHttpClient();
+            client.setConnectTimeout(0, TimeUnit.SECONDS); // connect timeout
+            client.setReadTimeout(0, TimeUnit.SECONDS);    // socket timeout
             JSONObject jsonObject =new JSONObject();
             jsonObject.put("factory", factory);
             jsonObject.put("timeRange", timeRange);
@@ -182,10 +174,15 @@ public class OlapController {
             jsonObject.put("hashname",stringHash);
             com.squareup.okhttp.RequestBody requestBody = com.squareup.okhttp.RequestBody.create(jsonType, jsonObject.toJSONString());
             String apiURL = "http://localhost:5000/algorithm/olapdrill";
-//        System.out.println(apiURL);
             com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder().url(apiURL).addHeader("Content-Type", "application/json;charset=utf-8").post(requestBody).build();
-            client.newCall(request).execute();
-            return "";
+            com.squareup.okhttp.Response re = client.newCall(request).execute();
+            JSONObject data = JSONObject.parseObject(re.body().string());
+            if(!data.get("status").toString().equals("success")){
+                return data.toJSONString();
+            }
+
+            List<String> olapre = new DbOperation().getOlapResult("olapresult", data.get("msg").toString(), dataSource.getConnection());
+            return olapre.get(0);
         }
 
     }
@@ -238,8 +235,10 @@ public class OlapController {
         if(res.size() != 0){
             return res.get(0);
         }else{
-            if((int)dt.get("count") != 0)return "";
+
             OkHttpClient client =new OkHttpClient();
+            client.setConnectTimeout(0, TimeUnit.SECONDS); // connect timeout
+            client.setReadTimeout(0, TimeUnit.SECONDS);    // socket timeout
             JSONObject jsonObject =new JSONObject();
             jsonObject.put("factory", factory);
             jsonObject.put("timeRange", timeRange);
@@ -251,8 +250,15 @@ public class OlapController {
             com.squareup.okhttp.RequestBody requestBody = com.squareup.okhttp.RequestBody.create(jsonType, jsonObject.toJSONString());
             String apiURL = "http://localhost:5000/algorithm/olaprotate";
             com.squareup.okhttp.Request request = new com.squareup.okhttp.Request.Builder().url(apiURL).addHeader("Content-Type", "application/json;charset=utf-8").post(requestBody).build();
-            client.newCall(request).execute();
-            return "";
+            com.squareup.okhttp.Response re = client.newCall(request).execute();
+            JSONObject data = JSONObject.parseObject(re.body().string());
+
+            if(!data.get("status").toString().equals("success")){
+                return data.toJSONString();
+            }
+
+            List<String> olapre = new DbOperation().getOlapResult("olapresult", data.get("msg").toString(), dataSource.getConnection());
+            return olapre.get(0);
         }
 
     }

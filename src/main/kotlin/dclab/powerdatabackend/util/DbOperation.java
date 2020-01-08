@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,10 +27,10 @@ public class DbOperation {
             preparedStatement.setString(2,endTime);
             preparedStatement.setString(3,device);
             ResultSet rs = preparedStatement.executeQuery();
-
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             while(rs.next()){
                 Map<String, Object> m = new HashMap<>();
-                m.put("date",rs.getTimestamp("regdate"));
+                m.put("date",df.format(rs.getTimestamp("regdate")));
                 m.put("measurePoint",rs.getString("metercolumn"));
                 m.put("value",rs.getDouble("culunmvalue"));
                 re.add(m);

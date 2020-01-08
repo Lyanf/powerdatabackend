@@ -31,40 +31,6 @@ public class getData {
     @Autowired
     private DataSource dataSource;
 
-    //    不指定测点，列出所有测点的数据，对应于查询功能，并构造出可以直接在前端放置的json数据结构
-//    @RequestMapping(value = "/getSpecificData", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String getSpecificData(@RequestBody Map<String, Object> dt) {
-//        QueryWrapper<Datas> qryWrapper = new QueryWrapper<>();
-//        Map<String, Object> para = new HashMap<>();
-//        para.put("factory", dt.get("factory"));
-//        para.put("line", dt.get("line"));
-//        para.put("device", dt.get("device"));
-//        ArrayList<String> timestamp = (ArrayList<String>) dt.get("timestamp");
-//
-//        String timestart = timestamp.get(0);
-//        String timeend = timestamp.get(1);
-//
-//        qryWrapper.allEq(para).between("timestamps", timestart, timeend);
-//        List<Map<String, Object>> res = datasService.listMaps(qryWrapper);
-//        List<Map<String, Object>> result = new ArrayList<>();
-//        for (int i = 0; i < res.size(); i++) {
-//
-//            Object t = res.get(i).get("timestamps");
-//            for (String key : res.get(i).keySet()) {
-//                Map<String, Object> m = new HashMap<>();
-//                if (key.equals("timestamps")) continue;
-//                Object value = res.get(i).get(key);
-//                m.put("date", t);
-//                m.put("measurePoint", ExcelOp.valueToKey().get(key));
-//                m.put("value", value);
-//                result.add(m);
-//            }
-//        }
-//
-//        String tempJS = JSON.toJSONString(result);
-//        return tempJS;
-//    }
 
     @RequestMapping(value = "/getSpecificData", method = RequestMethod.POST)
     @ResponseBody
@@ -82,8 +48,6 @@ public class getData {
 
 
         List<Map<String, Object>> res = new DbOperation().getAllBydevice("rtdata",timestart,timeend,device ,dataSource.getConnection());
-        System.out.println(res.size());
-
 
         String tempJS = JSON.toJSONString(res);
         return tempJS;
