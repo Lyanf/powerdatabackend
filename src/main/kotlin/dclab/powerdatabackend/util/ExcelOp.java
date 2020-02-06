@@ -74,12 +74,12 @@ public class ExcelOp {
 
     }
 
-    public static List<Map<String, String>> selectMetadata( Connection con){
+    public static List<Map<String, String>> selectMetadata( String tablename, Connection con){
         List<Map<String,String>> res = new ArrayList<>();
         try
         {
 
-            String query = "SELECT DISTINCT customerid,meterid FROM rtdata";
+            String query = "SELECT customerid,meterid FROM " + tablename + " group by customerid, meterid" ;
             Statement st = con.createStatement();
 
             ResultSet rs = st.executeQuery(query);
@@ -90,8 +90,6 @@ public class ExcelOp {
                 map.put("line", rs.getString("customerid"));
                 map.put("device", rs.getString("meterid"));
                 res.add(map);
-
-
             }
             st.close();
             con.close();

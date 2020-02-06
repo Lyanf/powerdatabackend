@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
@@ -45,9 +46,48 @@ public class getData {
 
         String timestart = timestamp.get(0).substring(0,10);
         String timeend = timestamp.get(1).substring(0,10);
+        List<Map<String, Object>> res = null;
+        if(device.equals("-1")) {
+
+            res = new DbOperation().getAllByFactory("rtdata",timestart,timeend,(int)dt.get("factory") ,dataSource.getConnection());
+        }else{
+            res = new DbOperation().getAllBydevice("rtdata",timestart,timeend,device ,dataSource.getConnection());
+        }
 
 
-        List<Map<String, Object>> res = new DbOperation().getAllBydevice("rtdata",timestart,timeend,device ,dataSource.getConnection());
+
+        String tempJS = JSON.toJSONString(res);
+        return tempJS;
+    }
+
+    @RequestMapping(value = "/getSpecificData2", method = RequestMethod.POST)
+    @ResponseBody
+    public String getSpecificData2(@RequestBody Map<String, Object> dt) throws ParseException, SQLException {
+
+        String measurePoint =(String)dt.get("measurePoint");
+        ArrayList<ArrayList<String>> selectedMetaData = (ArrayList<ArrayList<String>>)dt.get("selectedMetaData");
+
+        ArrayList<String> timestamp = (ArrayList<String>) dt.get("date");
+        String timestart = timestamp.get(0).substring(0,10);
+        String timeend = timestamp.get(1).substring(0,10);
+        ArrayList<String> device = new ArrayList<>();
+        ArrayList<Integer> factory = new ArrayList<>();
+        for(int i = 0; i < selectedMetaData.size();i++){
+            if(!factory.contains(selectedMetaData.get(i).get(0))){
+                factory.add(Integer.parseInt(selectedMetaData.get(i).get(0)));
+            }
+            if(selectedMetaData.get(i).size() == 3){
+                device.add(selectedMetaData.get(i).get(2));
+            }
+        }
+        Map<String, Object> res = null;
+        if(device.isEmpty()) {
+            res = new DbOperation().getvalueByfactory("rtdata",timestart,timeend,measurePoint, factory ,dataSource.getConnection());
+        }else{
+            res = new DbOperation().getvalueBydevice("rtdata",timestart,timeend,device ,measurePoint, factory.get(0),dataSource.getConnection());
+        }
+
+
 
         String tempJS = JSON.toJSONString(res);
         return tempJS;
@@ -58,7 +98,7 @@ public class getData {
     @ResponseBody
     public String getMetaDataTree() throws SQLException {
 
-        List<Map<String, String>> list = ExcelOp.selectMetadata( dataSource.getConnection());
+        List<Map<String, String>> list = ExcelOp.selectMetadata("rtdata", dataSource.getConnection());
 
         List<Map<String, Object>> rootList = new ArrayList<>();
 
@@ -70,6 +110,7 @@ public class getData {
                 dt.put("label", list.get(i).get("factory"));
                 dt.put("plabel", "root");
                 dt.put("value", list.get(i).get("factory"));
+                dt.put("flag", "1");
                 tmp.add(list.get(i).get("factory"));
                 rootList.add(dt);
             }
@@ -78,6 +119,7 @@ public class getData {
                 dt2.put("label", list.get(i).get("line"));
                 dt2.put("plabel", list.get(i).get("factory"));
                 dt2.put("value", list.get(i).get("line"));
+                dt2.put("flag", "2");
                 tmp.add(list.get(i).get("factory") + list.get(i).get("line"));
                 bodyList.add(dt2);
             }
@@ -87,11 +129,13 @@ public class getData {
                 dt3.put("label", list.get(i).get("device"));
                 dt3.put("plabel", list.get(i).get("line"));
                 dt3.put("value", list.get(i).get("device"));
+                dt3.put("flag", "3");
                 tmp.add(list.get(i).get("factory") + list.get(i).get("line") + list.get(i).get("device"));
                 bodyList.add(dt3);
             }
-
         }
+
+
         TreeTool tt = new TreeTool(rootList, bodyList);
         List<Map<String, Object>> result = tt.getTree();
         return JSONObject.toJSONString(result);

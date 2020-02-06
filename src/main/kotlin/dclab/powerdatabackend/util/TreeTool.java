@@ -31,11 +31,14 @@ public class TreeTool {
     public void getChild(Map<String, Object> deviceTree,Map<Object,Object> map){
         List<Map<String, Object>> childList = Lists.newArrayList();
         bodyList.stream()
-                .filter(c -> !map.containsKey(c.get("label")))
+                .filter(c -> !map.containsKey(c.get("label").toString() + c.get("flag")))
                 .filter(c ->c.get("plabel").equals(deviceTree.get("label")))
+                .filter(c -> (Integer.parseInt(c.get("flag").toString())== Integer.parseInt(deviceTree.get("flag").toString()) + 1))
                 .forEach(c ->{
-                    map.put(c.get("label"),c.get("plabel"));
-                    getChild(c,map);
+                    map.put(c.get("plabel").toString() +c.get("label")+c.get("flag"),c.get("plabel"));
+
+                    getChild(c, map);
+
                     childList.add(c);
                 });
         if(childList.size() != 0)deviceTree.put("children",childList);

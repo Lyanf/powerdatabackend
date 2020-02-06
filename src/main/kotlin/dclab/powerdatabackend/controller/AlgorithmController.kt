@@ -30,18 +30,43 @@ class AlgorithmController {
 
     @RequestMapping("/predict")
     fun predict(@RequestBody data: String): String {
-        val data:JSONObject = JSONObject.parseObject(data)
-        val factory = data["factory"].toString()
-        val line = data["line"].toString()
-        val device = data["device"].toString()
-        var measurePoint = data["measurePoint"].toString()
-        var timeRange: JSONArray = (data["date"] as JSONArray?)!!
+//        val data:JSONObject = JSONObject.parseObject(data)
+//        val factory = data["factory"].toString()
+//        val line = data["line"].toString()
+//        val device = data["device"].toString()
+//        var measurePoint = data["measurePoint"].toString()
+//        var timeRange: JSONArray = (data["date"] as JSONArray?)!!
+//        val t1:String = (timeRange[0] as String).substring(range = IntRange(0,9))
+//        val t2:String = (timeRange[1] as String).substring(range = IntRange(0,9))
+        val dataj:JSONObject = JSONObject.parseObject(data)
+        val data: JSONArray = JSONObject.parseArray(dataj["selectedMetaData"].toString())
+
+        var device = "-1"
+        var factory = ""
+        var line = ""
+        for (i in 0..(data.size - 1)) {
+            val a = JSONObject.parseArray(data.get(i).toString())
+
+            if(a.size == 1){
+                factory = a[0].toString()
+            }else {
+                device = (a.get(2).toString())
+                line = a.get(1).toString()
+                factory = a[0].toString()
+            }
+        }
+
+        var measurePoint = dataj["measurePoint"].toString()
+
+        var timeRange: JSONArray = (dataj["date"] as JSONArray?)!!
         val t1:String = (timeRange[0] as String).substring(range = IntRange(0,9))
         val t2:String = (timeRange[1] as String).substring(range = IntRange(0,9))
-        val allString = factory + line + device + measurePoint + t1 + t2
+
+        val allString = factory.toString() + device + measurePoint + t1 + t2
         val md = MessageDigest.getInstance("MD5")
         md.update(allString.toByteArray())
         val stringHash = (DatatypeConverter.printHexBinary(md.digest())).toLowerCase()
+
         val allList = algorithmresult.selectAll()
         var result: Algorithmresult? = null
         for (i in allList) {
@@ -62,7 +87,7 @@ class AlgorithmController {
             client.setReadTimeout(0, TimeUnit.SECONDS);    // socket timeout
             val jsonObject = JSONObject()
             jsonObject.put("factory", factory)
-            jsonObject.put("line", line)
+//            jsonObject.put("line", line)
             jsonObject.put("device", device)
             jsonObject.put("measurePoint", measurePoint)
             jsonObject.put("start", t1)
