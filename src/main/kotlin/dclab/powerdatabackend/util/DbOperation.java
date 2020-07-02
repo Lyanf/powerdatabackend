@@ -28,7 +28,7 @@ public class DbOperation {
             sql.append("or");
         }
         sql.append(")");
-        sql.append(" GROUP BY  customerid, regdate, metercolumn");
+        sql.append(" GROUP BY  customerid, regdate, metercolumn order by customerid, regdate");
         List<Map<String,Object>> re = new ArrayList<>();
         Map<String, ArrayList<ArrayList<Object>>> linedata = new HashMap<>();
         ArrayList<String> allPlace = new ArrayList<>();
@@ -99,7 +99,7 @@ public class DbOperation {
             if(i == device.size() - 1)continue;
             sql.append("or");
         }
-        sql.append(")");
+        sql.append(") order by meterid,regdate ");
         List<Map<String,Object>> re = new ArrayList<>();
         Map<String, ArrayList<ArrayList<Object>>> linedata = new HashMap<>();
         ArrayList<String> allPlace = new ArrayList<>();

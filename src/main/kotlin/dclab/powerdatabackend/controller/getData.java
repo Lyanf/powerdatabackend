@@ -17,6 +17,7 @@ import javax.sql.DataSource;
 import java.sql.Array;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -87,6 +88,17 @@ public class getData {
             res = new DbOperation().getvalueBydevice("rtdata",timestart,timeend,device ,measurePoint, factory.get(0),dataSource.getConnection());
         }
 
+        ArrayList<String> x = new ArrayList<>();
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date s = sd.parse(timestart);
+        Date e = sd.parse(timeend);
+        x.add(sdf.format(s));
+        while (s.before (e)){
+            s = new Date(s.getTime() + 900000);
+            x.add(sdf.format(s));
+        }
+        res.put("x", x);
 
 
         String tempJS = JSON.toJSONString(res);
