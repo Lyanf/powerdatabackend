@@ -62,8 +62,9 @@ class CorrelationController {
         var measurePoint = dataj["measurePoint"].toString()
 
         var timeRange: JSONArray = (dataj["date"] as JSONArray?)!!
-        val t1:String = (timeRange[0] as String).substring(range = IntRange(0,9))
-        val t2:String = (timeRange[1] as String).substring(range = IntRange(0,9))
+        //val t1:String = (timeRange[0] as String).substring(range = IntRange(0,9))
+        val t1:String = (timeRange[0] as String)
+        val t2:String = (timeRange[1] as String)
 
         val allString = factory.toString() + device + measurePoint + t1 + t2
         val md = MessageDigest.getInstance("MD5")

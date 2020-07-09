@@ -69,8 +69,11 @@ public class getData {
         ArrayList<ArrayList<String>> selectedMetaData = (ArrayList<ArrayList<String>>)dt.get("selectedMetaData");
 
         ArrayList<String> timestamp = (ArrayList<String>) dt.get("date");
-        String timestart = timestamp.get(0).substring(0,10);
-        String timeend = timestamp.get(1).substring(0,10);
+
+        //String timestart = timestamp.get(0).substring(0,10);
+        String timestart = timestamp.get(0);
+        String timeend = timestamp.get(1);
+
         ArrayList<String> device = new ArrayList<>();
         ArrayList<Integer> factory = new ArrayList<>();
         for(int i = 0; i < selectedMetaData.size();i++){

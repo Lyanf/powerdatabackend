@@ -47,7 +47,8 @@ public class OlapController {
         ArrayList<String> timeRange = (ArrayList<String>)dt.get("p3");
         ArrayList<String> measurePoint = (ArrayList<String>)dt.get("p2");
         for (int i = 0; i< timeRange.size();i++){
-            timeRange.set(i,timeRange.get(i).substring(0,10));
+            //timeRange.set(i,timeRange.get(i).substring(0,10));
+            timeRange.set(i,timeRange.get(i));
         }
         String p4 = (String)dt.get("p4");
         String p5 = (String)dt.get("p5");
@@ -127,7 +128,8 @@ public class OlapController {
         ArrayList<String> measurePoint = (ArrayList<String>)dt.get("p2");
 
         for (int i = 0; i< timeRange.size();i++){
-            timeRange.set(i,timeRange.get(i).substring(0,10));
+            //timeRange.set(i,timeRange.get(i).substring(0,10));
+            timeRange.set(i,timeRange.get(i));
         }
         String p4 = (String)dt.get("p4");
         String p5 = (String)dt.get("p5");
@@ -203,7 +205,8 @@ public class OlapController {
         ArrayList<String> timeRange = (ArrayList<String>)dt.get("p3");
         ArrayList<String> measurePoint = (ArrayList<String>)dt.get("p2");
         for (int i = 0; i< timeRange.size();i++){
-            timeRange.set(i,timeRange.get(i).substring(0,10));
+            //timeRange.set(i,timeRange.get(i).substring(0,10));
+            timeRange.set(i,timeRange.get(i));
         }
         String p4 = (String)dt.get("p4");
         String p5 = (String)dt.get("p5");

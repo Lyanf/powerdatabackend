@@ -57,25 +57,28 @@ class AlgorithmController {
         }
 
         var measurePoint = dataj["measurePoint"].toString()
-
+        var allData = dataj["selectAllTrain"].toString()
         var timeRange: JSONArray = (dataj["date"] as JSONArray?)!!
-        val t1:String = (timeRange[0] as String).substring(range = IntRange(0,9))
-        val t2:String = (timeRange[1] as String).substring(range = IntRange(0,9))
+        //val t1:String = (timeRange[0] as String).substring(range = IntRange(0,9))
+        val t1:String = (timeRange[0] as String)
+        val t2:String = (timeRange[1] as String)
 
         val allString = factory.toString() + device + measurePoint + t1 + t2
         val md = MessageDigest.getInstance("MD5")
         md.update(allString.toByteArray())
         val stringHash = (DatatypeConverter.printHexBinary(md.digest())).toLowerCase()
+        var result:Algorithmresult? = null
+        if (allData != "true"){
+            val allList = algorithmresult.selectAll()
+            for (i in allList) {
+                if (i.hashstr == stringHash) {
 
-        val allList = algorithmresult.selectAll()
-        var result: Algorithmresult? = null
-        for (i in allList) {
-            if (i.hashstr == stringHash) {
-
-                result = i
-                break
+                    result = i
+                    break
+                }
             }
         }
+
         println("\n-----------预测模块接收参数------------")
         println("/${factory}/${line}/${device}")
         println("-----------预测模块接收参数------------")
@@ -93,6 +96,7 @@ class AlgorithmController {
             jsonObject.put("start", t1)
             jsonObject.put("end", t2)
             jsonObject.put("hashname", stringHash)
+            jsonObject.put("allData", allData)
             val requestBody = com.squareup.okhttp.RequestBody.create(jsonType, jsonObject.toJSONString())
             val apiURL = "${Constants.ALGORITHM_URL}/algorithm/predict"
             val request = Request.Builder().url(apiURL).addHeader("Content-Type", "application/json;charset=utf-8").post(requestBody).build()
