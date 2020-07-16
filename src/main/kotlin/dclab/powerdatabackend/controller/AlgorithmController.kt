@@ -63,7 +63,7 @@ class AlgorithmController {
         val t1:String = (timeRange[0] as String)
         val t2:String = (timeRange[1] as String)
 
-        val allString = factory.toString() + device + measurePoint + t1 + t2
+        val allString = factory.toString() + device + measurePoint + t1 + t2 + allData
         val md = MessageDigest.getInstance("MD5")
         md.update(allString.toByteArray())
         val stringHash = (DatatypeConverter.printHexBinary(md.digest())).toLowerCase()
